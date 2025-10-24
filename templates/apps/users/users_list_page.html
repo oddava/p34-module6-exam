@@ -1,0 +1,43 @@
+{% extends 'apps/base.html' %}
+{% load static %}
+
+{% block title %}
+    Users
+{% endblock %}
+
+{% block css %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'apps/users_list_style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css"
+          integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous"/>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row mt-n1-9">
+            {% for user in users %}
+                <div class="col-md-6 col-xl-3 mt-1-9 wow fadeInUp" data-wow-delay=".2s"
+                     style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;">
+                    <div class="team-style07">
+                        <div class="team-thumb mb-1-9">
+                            <div class="thumb"><img src="https://bootdey.com/img/Content/avatar/avatar1.png"
+                                                    class="rounded-circle" alt="..."></div>
+                            <div class="team-social">
+                                <ul class="styled-icons">
+                                    <li><a class="styled-icons-item" href="{{ user.facebook_url }}"><i class="fab fa-facebook-f"></i></a>
+                                    </li>
+                                    <li><a class="styled-icons-item" href="{{ user.twitter_url }}"><i class="fab fa-twitter"></i></a></li>
+                                    <li><a class="styled-icons-item" href="{{ user.linkedin_url }}"><i class="fab fa-linkedin-in"></i></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <h3 class="h5 mb-1"><a href="#!">{{ user.first_name }}</a></h3>
+                        <p class="mb-0">{{ user.email }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+
+        </div>
+    </div>
+{% endblock %}

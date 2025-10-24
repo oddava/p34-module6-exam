@@ -1,0 +1,53 @@
+{% extends 'apps/base.html' %}
+{% load static %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'apps/index_style.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="bg-gradient"></div>
+
+    <nav>
+        <div class="logo">DjangoApp</div>
+        {% if not user.is_authenticated %}
+            <div class="nav-buttons">
+                <a href="{% url 'login_page' %}" class="btn-nav">Login</a>
+                <a href="{% url 'signup_page' %}" class="btn-nav primary">Sign Up</a>
+            </div>
+            {% else %}
+            <a href="{% url 'logout_view' %}" class="btn-nav">Log Out</a>
+        {% endif %}
+    </nav>
+
+    <section class="hero">
+        <h1>Welcome to Your Space</h1>
+        <p class="subtitle">Explore features, connect with users, and manage your profile seamlessly</p>
+
+        <div class="feature-grid">
+            {% if user.is_authenticated %}
+                <a href="{% url 'profile_page' %}" class="feature-card">
+                    <span class="feature-icon">👤</span>
+                    <h3 class="feature-title">Profile</h3>
+                    <p class="feature-desc">Manage your personal information and settings</p>
+                </a>
+
+            {% endif %}
+            <a href="{% url 'user_list_page' %}" class="feature-card">
+                <span class="feature-icon">👥</span>
+                <h3 class="feature-title">Users</h3>
+                <p class="feature-desc">Browse and connect with other members</p>
+            </a>
+
+            <a href="{% url 'user_posts_page' %}" class="feature-card">
+                <span class="feature-icon">📝</span>
+                <h3 class="feature-title">Posts</h3>
+                <p class="feature-desc">Share your thoughts and read updates</p>
+            </a>
+        </div>
+    </section>
+{% endblock %}

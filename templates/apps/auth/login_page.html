@@ -1,0 +1,84 @@
+{% extends 'apps/base.html' %}
+{% load static %}
+
+{% block title %}
+    Login
+{% endblock %}
+
+{% block css %}
+    <link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'apps/login_style.css' %}">
+{% endblock %}
+
+{% block content %}
+    <!--login modal-->
+    <div id="loginModal" class="modal show" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h1 class="text-center">Login</h1>
+                </div>
+                <div class="modal-body">
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-danger" style="color: white; background-color: #dc3545;">
+                            {% for error in form.non_field_errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    {% for field in form %}
+                        {% if field.errors %}
+                            <div class="alert alert-danger"
+                                 style="color: white; background-color: #dc3545;">
+                                <strong>{{ field.label }}:</strong>
+                                {% for error in field.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                    <form class="form col-md-12 center-block" method="post" action="{% url 'login_page' %}">
+                        {% csrf_token %}
+                        {% if request.GET.next %}
+                            <input type="hidden" name="next" value="{{ request.GET.next }}">
+                        {% endif %}
+
+                        {% if form.non_field_errors %}
+                            <div class="alert alert-danger">
+                                {% for err in form.non_field_errors %}{{ err }}{% endfor %}
+                            </div>
+                        {% endif %}
+
+                        <div class="form-group">
+                            {{ form.email }}
+                            {% for err in form.email.errors %}
+                                <div class="text-danger">{{ err }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="form-group">
+                            {{ form.password }}
+                            {% for err in form.password.errors %}
+                                <div class="text-danger">{{ err }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary btn-lg btn-block">Sign In</button>
+                            <span class="pull-right"><a href="#">Register</a></span>
+                            <span><a href="#">Need help?</a></span>
+                        </div>
+                    </form>
+
+
+                </div>
+                <div class="modal-footer">
+                    <div class="col-md-1accordion2">
+                        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
